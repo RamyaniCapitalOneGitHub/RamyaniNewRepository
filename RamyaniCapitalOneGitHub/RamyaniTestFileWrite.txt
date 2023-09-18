@@ -1,1 +1,45 @@
-updated code Code responded from ChatGpt to be uploaded here
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "GlueJob": {
+            "Type": "AWS::Glue::Job",
+            "Properties": {
+                "Command": {
+                    "Name": "glueetl",
+                    "ScriptLocation": "s3://mybucket/myjob.py"
+                },
+                "Role": {
+                    "Fn::GetAtt": [
+                        "GlueJobRole",
+                        "Arn"
+                    ]
+                },
+                "DefaultArguments": {
+                    "--job-bookmark-option": "job-bookmark-enable",
+                    "--TempDir": "s3://mybucket/temp"
+                },
+                "ExecutionProperty": {
+                    "MaxConcurrentRuns": 1
+                },
+                "Connections": {
+                    "Connections": [
+                        {
+                            "Name": {
+                                "Ref": "RedshiftConnection"
+                            }
+                        }
+                    ]
+                },
+                "MaxRetries": 0,
+                "AllocatedCapacity": 10,
+                "Timeout": 2880,
+                "GlueVersion": "2.0",
+                "NumberOfWorkers": 10,
+                "WorkerType": "G.1X",
+                "SecurityConfiguration": {
+                    "Ref": "MySecurityConfiguration"
+                }
+            }
+        }
+        }
+}
