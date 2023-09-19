@@ -8,12 +8,7 @@ updated code {
 "Name": "glueetl",
 "ScriptLocation": "s3://mybucket/myjob.py"
 },
-"Role": {
-"Fn::GetAtt": [
-"GlueJobRole",
-"Arn"
-]
-},
+"Role": "GlueJobRole",
 "DefaultArguments": {
 "--job-bookmark-option": "job-bookmark-enable",
 "--TempDir": "s3://mybucket/temp"
@@ -21,44 +16,16 @@ updated code {
 "ExecutionProperty": {
 "MaxConcurrentRuns": 1
 },
-"Connections": {
 "Connections": [
-{
-"Name": {
-"Ref": "RedshiftConnection"
-}
-}
-]
-},
+"RedshiftConnection"
+],
 "MaxRetries": 0,
 "AllocatedCapacity": 10,
 "Timeout": 2880,
 "GlueVersion": "2.0",
 "NumberOfWorkers": 10,
 "WorkerType": "G.1X",
-"SecurityConfiguration": {
-"Ref": "MySecurityConfiguration"
-}
-}
-},
-"GlueJobRole": {
-"Type": "AWS::IAM::Role",
-"Properties": {
-"AssumeRolePolicyDocument": {
-"Version": "2012-10-17",
-"Statement": [
-{
-"Effect": "Allow",
-"Principal": {
-"Service": [
-"glue.amazonaws.com"
-]
-},
-"Action": [
-"sts:AssumeRole"
-]
-}
-]
+"SecurityConfiguration": "MySecurityConfiguration"
 }
 }
 }
