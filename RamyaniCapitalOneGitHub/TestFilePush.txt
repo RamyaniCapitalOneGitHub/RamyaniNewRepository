@@ -1,6 +1,43 @@
 updated code {
 "AWSTemplateFormatVersion": "2010-09-09",
 "Resources": {
+"GlueJobRole": {
+"Type": "AWS::IAM::Role",
+"Properties": {
+"AssumeRolePolicyDocument": {
+"Version": "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Principal": {
+"Service": [
+"glue.amazonaws.com"
+]
+},
+"Action": [
+"sts:AssumeRole"
+]
+}
+]
+},
+"Path": "/",
+"Policies": [
+{
+"PolicyName": "root",
+"PolicyDocument": {
+"Version": "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Action": "*",
+"Resource": "*"
+}
+]
+}
+}
+]
+}
+},
 "GlueJob": {
 "Type": "AWS::Glue::Job",
 "Properties": {
@@ -39,22 +76,6 @@ updated code {
 "SecurityConfiguration": {
 "Ref": "MySecurityConfiguration"
 }
-}
-},
-"GlueJobRole": {
-"Type": "AWS::IAM::Role",
-"Properties": {
-"AssumeRolePolicyDocument": {
-"Version": "2012-10-17",
-"Statement": [
-{
-"Effect": "Allow",
-"Principal": {
-"Service": "glue.amazonaws.com"
-},
-"Action": "sts:AssumeRole"
-}
-]
 }
 }
 }
